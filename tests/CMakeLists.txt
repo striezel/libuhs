@@ -1,3 +1,6 @@
 cmake_minimum_required (VERSION 2.8)
 # Recurse into subdirectory for decryption test.
 add_subdirectory (decrypt_old)
+
+# Recurse into subdirectory for read test of old format.
+add_subdirectory (file_read_old)
