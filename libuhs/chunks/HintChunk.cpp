@@ -26,7 +26,7 @@ namespace libuhs
 HintChunk::HintChunk(const uint32_t start, const std::string& lbl, const std::vector<std::string>& theHints)
 : BasicChunk(),
   startingLine(start),
-  label(label),
+  label(lbl),
   hints(theHints)
 {
 }
