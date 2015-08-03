@@ -24,6 +24,7 @@
 #include <limits>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 namespace libuhs
 {
@@ -74,6 +75,15 @@ bool stringToUnsignedInt(const std::string& str, uintT& value)
  * \param line  the string that may have a trailing carriage return character
  */
 void removeTrailingCarriageReturn(std::string& line);
+
+
+/** \brief splits the given string into pieces, treating a given character
+ * as the separator for values, and returns the pieces as a vector
+ *
+ * \param line  string containing the separated values
+ * \param separator  character that serves as separator between elements
+ */
+std::vector<std::string> splitAtSeparator(std::string line, const char separator);
 
 } //namespace
 

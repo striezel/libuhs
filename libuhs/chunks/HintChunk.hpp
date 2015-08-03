@@ -43,9 +43,27 @@ namespace libuhs
      */
     virtual ChunkType getType() const;
 
+
+    /** \brief tries to read the rest of the chunk from the given stream
+     *
+     * \param input   input stream
+     * \param linesTotal  number of total lines in this hunk
+     * \return Returns true, if chunk was read successfully.
+     *         Returns false, if read operation failed.
+     */
+    bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
+
     uint32_t startingLine;
     std::string label;
     std::vector<std::string> hints;
+
+
+    /** \brief equality operator
+     *
+     * \param other   the other hint chunk
+     * \return Returns true, if the other hint chunk is equal to this one.
+     */
+    bool operator==(const HintChunk& other) const;
   }; //struct
 } //namespace
 

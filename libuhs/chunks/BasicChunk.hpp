@@ -21,6 +21,8 @@
 #ifndef BASICCHUNK_HPP
 #define BASICCHUNK_HPP
 
+#include <istream>
+
 namespace libuhs
 {
   /** enumeration type for chunk types */
@@ -37,6 +39,16 @@ namespace libuhs
      * \return returns the type of the hunk as enumeration
      */
     virtual ChunkType getType() const = 0;
+
+
+    /** \brief tries to read the rest of the chunk from the given stream
+     *
+     * \param input   input stream
+     * \param linesTotal  number of total lines in this hunk
+     * \return Returns true, if chunk was read successfully.
+     *         Returns false, if read operation failed.
+     */
+    virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) = 0;
   }; //struct
 
 } //namespace

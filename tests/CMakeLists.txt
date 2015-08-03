@@ -4,3 +4,6 @@ add_subdirectory (decrypt_old)
 
 # Recurse into subdirectory for read test of old format.
 add_subdirectory (file_read_old)
+
+# Recurse into subdirectory for read test of hint chunk.
+add_subdirectory (read_hint_chunk)
