@@ -19,14 +19,20 @@
 */
 
 #include "TextChunk.hpp"
+#include <cstring>
+#include <memory>
+#include <stdexcept>
+#include "../utility.hpp"
+#include "../decryption.hpp"
 
 namespace libuhs
 {
 
-TextChunk::TextChunk(const uint32_t start, const std::string& lbl, const uint32_t _offset, const uint32_t len)
+TextChunk::TextChunk(const uint32_t start, const std::string& lbl, const std::string& key, const uint32_t _offset, const uint32_t len)
 : BasicChunk(),
   startingLine(start),
   label(lbl),
+  decryptionKey(key),
   offset(_offset),
   length(len)
 {
@@ -35,6 +41,106 @@ TextChunk::TextChunk(const uint32_t start, const std::string& lbl, const uint32_
 ChunkType TextChunk::getType() const
 {
   return ChunkType::text;
+}
+
+bool TextChunk::readFromStream(std::istream& input, const unsigned int linesTotal)
+{
+  //valid chunk should have excatly three lines: chunk header, label, "coordinates"
+  if (linesTotal!=3)
+    return false;
+
+  if (!input.good())
+    return false;
+
+  unsigned int bufferSize = 4096;
+  std::unique_ptr<char[]> buffer(new char[bufferSize]);
+  std::memset(buffer.get(), 0, bufferSize);
+  //read chunk label
+  input.getline(buffer.get(), bufferSize-1, '\n');
+  if (!input.good())
+  {
+    throw std::runtime_error("Unable to read chunk label from stream!");
+    return false;
+  }
+  label = std::string(buffer.get());
+  removeTrailingCarriageReturn(label);
+  //read "coordinates"
+  std::memset(buffer.get(), 0, bufferSize);
+  input.getline(buffer.get(), bufferSize-1, '\n');
+  if (!input.good())
+  {
+    throw std::runtime_error("Unable to read offset numbers of text chunk from stream!");
+    return false;
+  }
+  std::string line(std::string(buffer.get()));
+  removeTrailingCarriageReturn(line);
+  const auto pieces = splitAtSeparator(line, ' ');
+  if (pieces.size() != 4)
+  {
+    throw std::runtime_error("Text chunk is expected to have exactly four values in third line, but found "
+                             + intToString<unsigned int>(pieces.size()) + " instead!");
+    return false;
+  }
+  offset = 0;
+  length = 0;
+  if (!stringToUnsignedInt<unsigned int>(pieces[2], offset))
+  {
+    throw std::runtime_error("Error in text chunk: " + pieces[2] + " is not an integer value!");
+    return false;
+  }
+  if (!stringToUnsignedInt<unsigned int>(pieces[3], length))
+  {
+    throw std::runtime_error("Error in text chunk: " + pieces[3] + " is not an integer value!");
+    return false;
+  }
+
+  const std::istream::pos_type currentPosition = input.tellg();
+  if (currentPosition == std::istream::pos_type(-1))
+  {
+    throw std::runtime_error("Error in text chunk: Could not current stream position before jump!");
+    return false;
+  }
+  //jump to offset
+  input.seekg(offset);
+  if (!input.good())
+  {
+    //seekg() failed!
+    throw std::runtime_error("Error in text chunk: First seek operation failed!");
+    return false;
+  }
+  if (length > bufferSize-1)
+  {
+    if (length > 1024*1024)
+    {
+      throw std::runtime_error("Error in text chunk: Length is more than 1 MB!");
+      return false;
+    }
+    buffer.reset(new char[length+1]);
+    bufferSize = length+1;
+  } //if re-allocation of larger buffer is required
+  std::memset(buffer.get(), 0, bufferSize);
+  input.read(buffer.get(), length);
+  if (!input.good())
+  {
+    throw std::runtime_error("Error in text chunk: Could not read encrypted text!");
+    return false;
+  }
+  std::string encryptedText(buffer.get());
+  while (encryptedText.size() < length)
+  {
+    encryptedText.push_back('\0');
+    encryptedText += std::string(buffer.get()+encryptedText.length());
+  } //while
+  text = Decryption::text(decryptionKey, encryptedText);
+  //jump back to original position of chunk
+  input.seekg(currentPosition);
+  if (!input.good())
+  {
+    //seekg() failed!
+    throw std::runtime_error("Error in text chunk: Second seek operation failed!");
+    return false;
+  }
+  return true;
 }
 
 } //namespace

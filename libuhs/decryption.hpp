@@ -33,6 +33,23 @@ namespace libuhs
      * \return returns the decrypted string
      */
     static std::string UHS88a(const std::string& message);
+
+
+    /** \brief generates a decryption key based on the given main label
+     *
+     * \param mainLabel  the main label
+     * \return Returns decryption key.
+     */
+    static std::string generateKey(const std::string& mainLabel);
+
+
+    /** \brief decrypts a message from a text hunk
+     *
+     * \param key  the decryption key, obtained from generateKey()
+     * \param encryptedText  the encrypted text
+     * \return Returns the decrypted text.
+     */
+    static std::string text(const std::string& key, const std::string& encryptedText);
   }; //struct
 } //namespace
 

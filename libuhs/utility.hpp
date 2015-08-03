@@ -22,6 +22,7 @@
 #define LIBUHS_UTILITY_HPP
 
 #include <limits>
+#include <sstream>
 #include <string>
 #include <type_traits>
 #include <vector>
@@ -67,6 +68,22 @@ bool stringToUnsignedInt(const std::string& str, uintT& value)
     }
   }//for
   return true;
+}
+
+
+/** \brief tries to convert an integer value to its string representation
+ *
+ * \param value  the integer variable that shall be converted
+ * \return Returns the string representation of the integer value.
+ */
+template<typename intT>
+std::string intToString(const intT value)
+{
+  static_assert(std::is_integral<intT>::value, "Template type intT shall be integral type!");
+
+  std::stringstream s_str;
+  s_str << value;
+  return s_str.str();
 }
 
 

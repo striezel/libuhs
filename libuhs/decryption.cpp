@@ -47,4 +47,49 @@ std::string Decryption::UHS88a(const std::string& message)
   return std::move(result);
 }
 
+std::string Decryption::generateKey(const std::string& mainLabel)
+{
+  //constant "key"
+  const std::string k("key");
+  /* The real key will have same length as main label, so we can intialize it
+   * with main label's value. */
+  std::string theKey(mainLabel);
+  unsigned int i;
+  for (i=0; i<mainLabel.size(); ++i)
+  {
+    unsigned char currentLetter = mainLabel[i] + (static_cast<unsigned char>(k[i%3]) xor static_cast<unsigned char>(i + 40));
+    while (currentLetter>127)
+    {
+      currentLetter = currentLetter - 96;
+    }
+    theKey[i] = currentLetter;
+  } //for
+  return std::move(theKey);
+}
+
+std::string Decryption::text(const std::string& key, const std::string& encryptedText)
+{
+  std::string decryptedText(encryptedText);
+  unsigned int i;
+  for (i=0; i<encryptedText.size(); ++i)
+  {
+    const unsigned int codeoffset = i % key.size();
+    unsigned char currentLetter = encryptedText[i] - (static_cast<unsigned char>(key[codeoffset]) xor static_cast<unsigned char>(codeoffset + 40));
+    while (currentLetter>127)
+    {
+      currentLetter = currentLetter - 96;
+    } //while
+    /*
+    if (currentLetter == '\0')
+      currentLetter = ' ';
+    */
+    while (currentLetter<32)
+    {
+      currentLetter = currentLetter + 96;
+    } //while
+    decryptedText[i] = currentLetter;
+  } //for
+  return decryptedText;
+}
+
 } //namespace
