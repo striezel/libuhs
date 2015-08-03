@@ -88,6 +88,10 @@ std::string Decryption::text(const std::string& key, const std::string& encrypte
       currentLetter = currentLetter + 96;
     } //while
     decryptedText[i] = currentLetter;
+    if (currentLetter == 0x60)
+    {
+      decryptedText[i] = ' ';
+    }
   } //for
   return decryptedText;
 }

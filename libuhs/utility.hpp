@@ -94,6 +94,13 @@ std::string intToString(const intT value)
 void removeTrailingCarriageReturn(std::string& line);
 
 
+/** \brief removes a trailing line feed character from a string
+ *
+ * \param line  the string that may have a trailing line feed character
+ */
+void removeTrailingLineFeed(std::string& line);
+
+
 /** \brief splits the given string into pieces, treating a given character
  * as the separator for values, and returns the pieces as a vector
  *

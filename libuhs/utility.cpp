@@ -35,6 +35,18 @@ void removeTrailingCarriageReturn(std::string& line)
   } //if
 }
 
+void removeTrailingLineFeed(std::string& line)
+{
+  if (!line.empty())
+  {
+    // -> remove \n characters at the end, if present
+    if (line.at(line.length()-1)=='\n')
+    {
+      line.erase(line.length()-1);
+    }
+  } //if
+}
+
 std::vector<std::string> splitAtSeparator(std::string line, const char separator)
 {
   std::vector<std::string> result;

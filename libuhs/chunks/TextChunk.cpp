@@ -131,6 +131,8 @@ bool TextChunk::readFromStream(std::istream& input, const unsigned int linesTota
     encryptedText.push_back('\0');
     encryptedText += std::string(buffer.get()+encryptedText.length());
   } //while
+  removeTrailingLineFeed(encryptedText);
+  removeTrailingCarriageReturn(encryptedText);
   text = Decryption::text(decryptionKey, encryptedText);
   //jump back to original position of chunk
   input.seekg(currentPosition);
