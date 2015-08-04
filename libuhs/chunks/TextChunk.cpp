@@ -34,7 +34,8 @@ TextChunk::TextChunk(const uint32_t start, const std::string& lbl, const std::st
   label(lbl),
   decryptionKey(key),
   offset(_offset),
-  length(len)
+  length(len),
+  text("")
 {
 }
 

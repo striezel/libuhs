@@ -1,0 +1,16 @@
+16 info
+-
+length=0123456
+date=31-Feb-15
+time=22:23:24
+author=Kermit the Frog
+publisher=The Pub
+copyright=This is some random copyright notice.
+copyright=It has really not much of a purpose here and is just used for unit
+copyright=testing, in particular for testing InfoChunk::readFromStream().
+author-note=Kermit the Frog, aka your favourite green guy, can be reached at
+author-note=frog@example.com.
+game-note=This game was published by somebody else.  All trademarks in this file
+game-note=are the property of their respective owners.
+>More random text that should be silently ignored by our reading routine.
+>Yep, some more bogus data here.

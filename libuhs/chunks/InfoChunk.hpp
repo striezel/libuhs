@@ -18,27 +18,29 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef BASICCHUNK_HPP
-#define BASICCHUNK_HPP
+#ifndef LIBUHS_INFOCHUNK_HPP
+#define LIBUHS_INFOCHUNK_HPP
 
-#include <istream>
+#include "BasicChunk.hpp"
+#include <cstdint>
+#include <string>
 
 namespace libuhs
 {
-  /** enumeration type for chunk types */
-  enum class ChunkType {hint, hyperpng, info, link, nesthint, subject, text};
-
-  struct BasicChunk
+  struct InfoChunk: public BasicChunk
   {
-    //virtual destructor
-    virtual ~BasicChunk() {}
+    /** \brief default constructor */
+    InfoChunk();
+
+    /** \brief destructor */
+    ~InfoChunk() {}
 
 
     /** \brief gets the type of the hunk
      *
      * \return returns the type of the hunk as enumeration
      */
-    virtual ChunkType getType() const = 0;
+    virtual ChunkType getType() const;
 
 
     /** \brief tries to read the rest of the chunk from the given stream
@@ -48,9 +50,23 @@ namespace libuhs
      * \return Returns true, if chunk was read successfully.
      *         Returns false, if read operation failed.
      */
-    virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) = 0;
-  }; //struct
+    virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
 
+
+    /** \brief resets all data members to zero / empty
+     */
+    void reset();
+
+
+    uint32_t fileLength; /**< length of the file */
+    std::string date; /**< date of creation? */
+    std::string time; /**< time of creation? */
+    std::string author; /**< author's name */
+    std::string publisher; /**< publisher of the game */
+    std::string copyrightNotice; /**< copyright notice */
+    std::string authorNote; /**< Note about the author */
+    std::string gameNote; /**< notes about the game */
+  }; //struct
 } //namespace
 
-#endif // BASICCHUNK_HPP
+#endif // LIBUHS_INFOCHUNK_HPP
