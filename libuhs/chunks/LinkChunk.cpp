@@ -19,6 +19,10 @@
 */
 
 #include "LinkChunk.hpp"
+#include <cstring>
+#include <memory>
+#include <stdexcept>
+#include "../utility.hpp"
 
 namespace libuhs
 {
@@ -34,6 +38,52 @@ LinkChunk::LinkChunk(const uint32_t start, const std::string& lbl, const uint32_
 ChunkType LinkChunk::getType() const
 {
   return ChunkType::link;
+}
+
+bool LinkChunk::readFromStream(std::istream& input, const unsigned int linesTotal)
+{
+  //link chunk has exactly three lines: header, link label, link destination
+  if (linesTotal != 3)
+    return false;
+
+  if (!input.good())
+    return false;
+
+  unsigned int bufferSize = 4096;
+  std::unique_ptr<char[]> buffer(new char[bufferSize]);
+  std::memset(buffer.get(), 0, bufferSize);
+  //read chunk label
+  input.getline(buffer.get(), bufferSize-1, '\n');
+  if (!input.good())
+  {
+    throw std::runtime_error("Unable to read chunk label from stream!");
+    return false;
+  }
+  label = std::string(buffer.get());
+  removeTrailingCarriageReturn(label);
+
+  //read link destination line
+  std::memset(buffer.get(), 0, bufferSize);
+  input.getline(buffer.get(), bufferSize-1, '\n');
+  if (!input.good())
+  {
+    throw std::runtime_error("Error: Unable to read link destination line from stream!");
+    return false;
+  }
+  std::string line = std::string(buffer.get());
+  removeTrailingCarriageReturn(line);
+  if (!stringToUnsignedInt<uint32_t>(line, destinationLine))
+  {
+    throw std::runtime_error("Error: " + line + " cannot be converted to a link destination number!");
+    return false;
+  } //if not convertible to unsigned integer
+  return true;
+}
+
+bool LinkChunk::operator==(const LinkChunk& other) const
+{
+  return ((startingLine == other.startingLine) && (label == other.label)
+      && (destinationLine == other.destinationLine));
 }
 
 } //namespace

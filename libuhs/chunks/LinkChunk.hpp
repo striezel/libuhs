@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef LINKCHUNK_HPP
-#define LINKCHUNK_HPP
+#ifndef LIBUHS_LINKCHUNK_HPP
+#define LIBUHS_LINKCHUNK_HPP
 
 #include <cstdint>
 #include <string>
@@ -29,10 +29,11 @@ namespace libuhs
 {
   struct LinkChunk: public BasicChunk
   {
-    //constructor
-    LinkChunk(const uint32_t start, const std::string& lbl, const uint32_t dest);
+    ///default constructor
+    LinkChunk(const uint32_t start = 0, const std::string& lbl=std::string(), const uint32_t dest=0);
 
-    //destructor
+
+    ///destructor
     ~LinkChunk() {}
 
 
@@ -42,10 +43,29 @@ namespace libuhs
      */
     virtual ChunkType getType() const;
 
+
+    /** \brief tries to read the rest of the chunk from the given stream
+     *
+     * \param input   input stream
+     * \param linesTotal  number of total lines in this hunk
+     * \return Returns true, if chunk was read successfully.
+     *         Returns false, if read operation failed.
+     */
+    virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
+
+
+    /** \brief equality operator
+     *
+     * \param other   the other link chunk
+     * \return Returns true, if the other link chunk is equal to this one.
+     */
+    bool operator==(const LinkChunk& other) const;
+
+
     uint32_t startingLine;
     std::string label;
     uint32_t destinationLine;
   }; //struct
 } //namespace
 
-#endif // LINKCHUNK_HPP
+#endif // LIBUHS_LINKCHUNK_HPP
