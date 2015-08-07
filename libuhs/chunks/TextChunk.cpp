@@ -98,7 +98,7 @@ bool TextChunk::readFromStream(std::istream& input, const unsigned int linesTota
   const std::istream::pos_type currentPosition = input.tellg();
   if (currentPosition == std::istream::pos_type(-1))
   {
-    throw std::runtime_error("Error in text chunk: Could not current stream position before jump!");
+    throw std::runtime_error("Error in text chunk: Could not save current stream position before jump!");
     return false;
   }
   //jump to offset

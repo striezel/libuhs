@@ -8,6 +8,9 @@ add_subdirectory (file_read_old)
 # Recurse into subdirectory for read test of hint chunk.
 add_subdirectory (read_hint_chunk)
 
+# Recurse into subdirectory for read test of hyperpng chunk.
+add_subdirectory (read_hyperpng_chunk)
+
 # Recurse into subdirectory for read test of info chunk.
 add_subdirectory (read_info_chunk)
 
