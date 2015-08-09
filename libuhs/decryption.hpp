@@ -43,6 +43,15 @@ namespace libuhs
     static std::string generateKey(const std::string& mainLabel);
 
 
+    /** \brief decrypts a message from a nesthint hunk
+     *
+     * \param key  the decryption key, obtained from generateKey()
+     * \param encryptedText  the encrypted text
+     * \return Returns the decrypted text.
+     */
+    static std::string nesthint(const std::string& key, const std::string& encryptedText);
+
+
     /** \brief decrypts a message from a text hunk
      *
      * \param key  the decryption key, obtained from generateKey()
@@ -50,6 +59,15 @@ namespace libuhs
      * \return Returns the decrypted text.
      */
     static std::string text(const std::string& key, const std::string& encryptedText);
+
+
+    /** \brief returns a "harmonized" string that is better readable
+     *
+     * \param text   a text, usually returned by nesthint() or text() functions of this class
+     * \param compressSpaces   if true, the function compresses multiple spaces into one single space
+     * \return Returns a harmonized string;
+     */
+    static std::string harmonize(const std::string& text, const bool compressSpaces = true);
   }; //struct
 } //namespace
 

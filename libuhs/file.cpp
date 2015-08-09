@@ -236,17 +236,7 @@ bool File::readHintLines()
 
 bool File::skipLines(const unsigned int linesToSkip)
 {
-  const unsigned int bufferSize = 4096;
-  std::unique_ptr<char[]> buffer(new char[bufferSize]);
-  //std::memset(buffer.get(), 0, bufferSize);
-  unsigned int i;
-  for (i=0; i<linesToSkip; ++i)
-  {
-    m_Stream.getline(buffer.get(), bufferSize-1, '\n');
-    if (!m_Stream.good())
-      return false;
-  } //for
-  return true;
+  return libuhs::skipLines(m_Stream, linesToSkip);
 }
 
 } //namespace

@@ -67,6 +67,33 @@ std::string Decryption::generateKey(const std::string& mainLabel)
   return std::move(theKey);
 }
 
+std::string Decryption::nesthint(const std::string& key, const std::string& encryptedText)
+{
+  std::string decryptedText(encryptedText);
+  unsigned int i;
+  for (i=0; i<encryptedText.size(); ++i)
+  {
+    const unsigned int codeoffset = i % key.size();
+    unsigned char currentLetter = encryptedText[i] - (static_cast<unsigned char>(key[codeoffset]) xor static_cast<unsigned char>(i + 40));
+    while (currentLetter>127)
+    {
+      currentLetter = currentLetter - 96;
+    } //while
+    while (currentLetter<32)
+    {
+      currentLetter = currentLetter + 96;
+    } //while
+    decryptedText[i] = currentLetter;
+    /*
+    if (currentLetter == 0x60)
+    {
+      decryptedText[i] = ' ';
+    }
+    */
+  } //for
+  return decryptedText;
+}
+
 std::string Decryption::text(const std::string& key, const std::string& encryptedText)
 {
   std::string decryptedText(encryptedText);
@@ -94,6 +121,60 @@ std::string Decryption::text(const std::string& key, const std::string& encrypte
     }
   } //for
   return decryptedText;
+}
+
+std::string Decryption::harmonize(const std::string& text, const bool compressSpaces)
+{
+  std::string result(text);
+
+  // replace 0x60 (ASCII 96) by space
+  {
+    std::string::size_type pos = result.find(static_cast<char>(0x60));
+    while (pos != std::string::npos)
+    {
+       result[pos] = ' ';
+       pos = result.find(static_cast<char>(0x60), pos);
+    } //while
+  } // 0x60 --> 0x20
+
+  if (compressSpaces)
+  {
+    std::string::size_type pos = result.find("  ");
+    while (pos != std::string::npos)
+    {
+       result.erase(pos, 1);
+       pos = result.find("  ", pos);
+    } //while
+  } //if compress spaces
+
+  //improve upper/lower case
+  {
+    //Find two spaces - there are the word boundaries.
+    std::string::size_type pos1 = result.find(' ');
+    std::string::size_type pos2 = result.find(' ', pos1+1);
+    while ((pos1 != std::string::npos) && (pos2 != std::string::npos))
+    {
+      //A word should have at least two letters.
+      if (pos1+3<=pos2)
+      {
+        /* Only transform whole word into lower case, if first character is a
+           lower case letter. */
+        if (std::isalpha(result[pos1+1])&& std::islower(result[pos1+1]))
+        {
+          std::string::size_type i = pos1+1;
+          for (i=pos1+1; i<pos2; ++i)
+          {
+            result[i] = std::tolower(result[i]);
+          } //for
+        } //if letters and lower case
+      } //if minimum length
+      //find next word boundary
+      pos1 = pos2;
+      pos2 = result.find(' ', pos1+1);
+    } //while
+  } //improve upper/lower case
+
+  return std::move(result);
 }
 
 } //namespace

@@ -21,6 +21,7 @@
 #ifndef LIBUHS_UTILITY_HPP
 #define LIBUHS_UTILITY_HPP
 
+#include <istream>
 #include <limits>
 #include <sstream>
 #include <string>
@@ -108,6 +109,16 @@ void removeTrailingLineFeed(std::string& line);
  * \param separator  character that serves as separator between elements
  */
 std::vector<std::string> splitAtSeparator(std::string line, const char separator);
+
+
+/** \brief utility function that skips lines in the given stream
+ *
+ * \param inStream     the input stream where lines shall be skipped
+ * \param linesToSkip  the number of lines that will be skipped
+ * \return Returns true, if the given number of lines could be skipped.
+ *         Returns false on failure.
+ */
+bool skipLines(std::istream& inStream, const unsigned int linesToSkip);
 
 } //namespace
 

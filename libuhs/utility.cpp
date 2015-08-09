@@ -19,6 +19,7 @@
 */
 
 #include "utility.hpp"
+#include <memory>
 
 namespace libuhs
 {
@@ -67,6 +68,21 @@ std::vector<std::string> splitAtSeparator(std::string line, const char separator
     result.push_back(line);
   }
   return result;
+}
+
+bool skipLines(std::istream& inStream, const unsigned int linesToSkip)
+{
+  const unsigned int bufferSize = 4096;
+  std::unique_ptr<char[]> buffer(new char[bufferSize]);
+  //std::memset(buffer.get(), 0, bufferSize);
+  unsigned int i;
+  for (i=0; i<linesToSkip; ++i)
+  {
+    inStream.getline(buffer.get(), bufferSize-1, '\n');
+    if (!inStream.good())
+      return false;
+  } //for
+  return true;
 }
 
 } //namespace
