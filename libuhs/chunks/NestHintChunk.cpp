@@ -29,9 +29,8 @@ namespace libuhs
 {
 
 NestHintChunk::NestHintChunk(const uint32_t start, const std::string& lbl, const std::string& key, const std::vector<std::string>& theHints)
-: BasicChunk(),
+: BasicChunk(lbl),
   startingLine(start),
-  label(lbl),
   decryptionKey(key),
   hints(theHints)
 {
@@ -61,8 +60,9 @@ bool NestHintChunk::readFromStream(std::istream& input, const unsigned int lines
     throw std::runtime_error("Unable to read chunk label from stream!");
     return false;
   }
-  label = std::string(buffer.get());
+  std::string label = std::string(buffer.get());
   removeTrailingCarriageReturn(label);
+  setLabel(label);
 
   // "-" is hint separator
   const std::string cHintSeparator("-");
@@ -146,16 +146,6 @@ bool NestHintChunk::readFromStream(std::istream& input, const unsigned int lines
     } //else
     ++processedLines;
   } //while
-
-  /*
-  //decrypt lines
-  unsigned int i;
-  for (i=0; i<hints.size(); ++i)
-  {
-    if (hints[i].find("Info: ") != 0)
-      hints[i] = Decryption::nesthint(decryptionKey, hints[i]);
-  } //for
-  */
 
   return true;
 }

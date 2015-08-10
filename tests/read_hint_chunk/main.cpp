@@ -114,7 +114,7 @@ int main(int argc, char** argv)
       return 1;
     }
     std::cout << "Info: Successfully read hint chunk from file!" << std::endl;
-    std::cout << "  Label: " << hc.label << std::endl
+    std::cout << "  Label: " << hc.getLabel() << std::endl
               << "  # of hints: " << hc.hints.size() << std::endl;
     /*
     for (auto&& item: hc.hints)

@@ -54,7 +54,6 @@ namespace libuhs
     bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
 
     uint32_t startingLine;
-    std::string label;
     std::vector<std::string> hints;
 
 

@@ -24,6 +24,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../libuhs/chunks/BasicChunk.cpp" />
 		<Unit filename="../../libuhs/chunks/BasicChunk.hpp" />
 		<Unit filename="../../libuhs/chunks/InfoChunk.cpp" />
 		<Unit filename="../../libuhs/chunks/InfoChunk.hpp" />

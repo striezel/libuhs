@@ -22,33 +22,58 @@
 #define BASICCHUNK_HPP
 
 #include <istream>
+#include <string>
 
 namespace libuhs
 {
   /** enumeration type for chunk types */
   enum class ChunkType {hint, hyperpng, info, link, nesthint, subject, text};
 
-  struct BasicChunk
+  class BasicChunk
   {
-    //virtual destructor
-    virtual ~BasicChunk() {}
+    //private:
+      std::string m_Label;
+    public:
+      /** \brief constructor
+       *
+       * \param label   the chunk label
+       */
+      BasicChunk(const std::string& label = "");
 
 
-    /** \brief gets the type of the hunk
-     *
-     * \return returns the type of the hunk as enumeration
-     */
-    virtual ChunkType getType() const = 0;
+      ///virtual destructor
+      virtual ~BasicChunk() {}
 
 
-    /** \brief tries to read the rest of the chunk from the given stream
-     *
-     * \param input   input stream
-     * \param linesTotal  number of total lines in this hunk
-     * \return Returns true, if chunk was read successfully.
-     *         Returns false, if read operation failed.
-     */
-    virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) = 0;
+      /** \brief gets the type of the hunk
+       *
+       * \return returns the type of the hunk as enumeration
+       */
+      virtual ChunkType getType() const = 0;
+
+
+      /** \brief retrieves the chunk label
+       *
+       * \return Returns the current chunk label
+       */
+      const std::string& getLabel() const;
+
+
+      /** \brief sets a new chunk label
+       *
+       * \param newLabel   the new chunk label
+       */
+      void setLabel(const std::string& newLabel);
+
+
+      /** \brief tries to read the rest of the chunk from the given stream
+       *
+       * \param input   input stream
+       * \param linesTotal  number of total lines in this hunk
+       * \return Returns true, if chunk was read successfully.
+       *         Returns false, if read operation failed.
+       */
+      virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) = 0;
   }; //struct
 
 } //namespace

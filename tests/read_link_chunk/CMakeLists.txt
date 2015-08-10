@@ -10,6 +10,7 @@ set( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -s" )
 
 # executable for test
 add_executable(test_read_link_chunk
+    ../../libuhs/chunks/BasicChunk.cpp
     ../../libuhs/chunks/LinkChunk.cpp
     ../../libuhs/utility.cpp
     main.cpp)

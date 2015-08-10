@@ -29,9 +29,8 @@ namespace libuhs
 {
 
 TextChunk::TextChunk(const uint32_t start, const std::string& lbl, const std::string& key, const uint32_t _offset, const uint32_t len)
-: BasicChunk(),
+: BasicChunk(lbl),
   startingLine(start),
-  label(lbl),
   decryptionKey(key),
   offset(_offset),
   length(len),
@@ -63,8 +62,10 @@ bool TextChunk::readFromStream(std::istream& input, const unsigned int linesTota
     throw std::runtime_error("Unable to read chunk label from stream!");
     return false;
   }
-  label = std::string(buffer.get());
-  removeTrailingCarriageReturn(label);
+  std::string line = std::string(buffer.get());
+  removeTrailingCarriageReturn(line);
+  setLabel(line);
+
   //read "coordinates"
   std::memset(buffer.get(), 0, bufferSize);
   input.getline(buffer.get(), bufferSize-1, '\n');
@@ -73,7 +74,7 @@ bool TextChunk::readFromStream(std::istream& input, const unsigned int linesTota
     throw std::runtime_error("Unable to read offset numbers of text chunk from stream!");
     return false;
   }
-  std::string line(std::string(buffer.get()));
+  line = std::string(buffer.get());
   removeTrailingCarriageReturn(line);
   const auto pieces = splitAtSeparator(line, ' ');
   if (pieces.size() != 4)

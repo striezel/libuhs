@@ -31,7 +31,12 @@ namespace libuhs
 {
   struct SubjectChunk: public BasicChunk
   {
-    ///default constructor
+    /** \brief default constructor
+     *
+     * \param start   starting line number
+     * \param lbl     chunk label
+     * \param key     decryption key (if known)
+     */
     SubjectChunk(const uint32_t start = 0, const std::string& lbl=std::string(), const std::string& key = "");
 
 
@@ -57,7 +62,6 @@ namespace libuhs
 
 
     uint32_t startingLine;
-    std::string label; /**< chunk label */
     std::string decryptionKey; /**< decryption key */
     std::vector<std::unique_ptr<BasicChunk> > chunks;
   }; //struct

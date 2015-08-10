@@ -28,9 +28,8 @@ namespace libuhs
 {
 
 LinkChunk::LinkChunk(const uint32_t start, const std::string& lbl, const uint32_t dest)
-: BasicChunk(),
+: BasicChunk(lbl),
   startingLine(start),
-  label(lbl),
   destinationLine(dest)
 {
 }
@@ -59,8 +58,9 @@ bool LinkChunk::readFromStream(std::istream& input, const unsigned int linesTota
     throw std::runtime_error("Unable to read chunk label from stream!");
     return false;
   }
-  label = std::string(buffer.get());
-  removeTrailingCarriageReturn(label);
+  std::string line = std::string(buffer.get());
+  removeTrailingCarriageReturn(line);
+  setLabel(line);
 
   //read link destination line
   std::memset(buffer.get(), 0, bufferSize);
@@ -70,7 +70,7 @@ bool LinkChunk::readFromStream(std::istream& input, const unsigned int linesTota
     throw std::runtime_error("Error: Unable to read link destination line from stream!");
     return false;
   }
-  std::string line = std::string(buffer.get());
+  line = std::string(buffer.get());
   removeTrailingCarriageReturn(line);
   if (!stringToUnsignedInt<uint32_t>(line, destinationLine))
   {
@@ -82,7 +82,7 @@ bool LinkChunk::readFromStream(std::istream& input, const unsigned int linesTota
 
 bool LinkChunk::operator==(const LinkChunk& other) const
 {
-  return ((startingLine == other.startingLine) && (label == other.label)
+  return ((startingLine == other.startingLine) && (getLabel() == other.getLabel())
       && (destinationLine == other.destinationLine));
 }
 

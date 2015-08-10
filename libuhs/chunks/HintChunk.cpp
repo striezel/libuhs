@@ -29,9 +29,8 @@ namespace libuhs
 {
 
 HintChunk::HintChunk(const uint32_t start, const std::string& lbl, const std::vector<std::string>& theHints)
-: BasicChunk(),
+: BasicChunk(lbl),
   startingLine(start),
-  label(lbl),
   hints(theHints)
 {
 }
@@ -60,8 +59,9 @@ bool HintChunk::readFromStream(std::istream& input, const unsigned int linesTota
     throw std::runtime_error("Unable to read chunk label from stream!");
     return false;
   }
-  label = std::string(buffer.get());
-  removeTrailingCarriageReturn(label);
+  std::string line = std::string(buffer.get());
+  removeTrailingCarriageReturn(line);
+  setLabel(line);
 
   // "-" is hint separator
   const std::string cHintSeparator("-");
@@ -82,7 +82,7 @@ bool HintChunk::readFromStream(std::istream& input, const unsigned int linesTota
       return false;
     }
 
-    std::string line(buffer.get());
+    line = std::string(buffer.get());
     removeTrailingCarriageReturn(line);
 
     if (line==cHintSeparator)
@@ -110,7 +110,7 @@ bool HintChunk::readFromStream(std::istream& input, const unsigned int linesTota
 
 bool HintChunk::operator==(const HintChunk& other) const
 {
-  return ((startingLine == other.startingLine) && (label == other.label)
+  return ((startingLine == other.startingLine) && (getLabel() == other.getLabel())
       && (hints == other.hints));
 }
 

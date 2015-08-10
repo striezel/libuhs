@@ -20,7 +20,6 @@
 
 #include "SubjectChunk.hpp"
 #include <cstring>
-#include <memory>
 #include <stdexcept>
 #include "../ChunkReader.hpp"
 #include "../decryption.hpp"
@@ -30,9 +29,8 @@ namespace libuhs
 {
 
 SubjectChunk::SubjectChunk(const uint32_t start, const std::string& lbl, const std::string& key)
-: BasicChunk(),
+: BasicChunk(lbl),
   startingLine(start),
-  label(lbl),
   decryptionKey(key),
   chunks(std::vector<std::unique_ptr<BasicChunk> >())
 {
@@ -52,10 +50,8 @@ bool SubjectChunk::readFromStream(std::istream& input, const unsigned int linesT
   if (!input.good())
     return false;
 
-  unsigned int bufferSize = 4096;
-  std::unique_ptr<char[]> buffer(new char[bufferSize]);
-  std::memset(buffer.get(), 0, bufferSize);
   //read chunk label
+  std::string label;
   std::getline(input, label, '\n');
   if (!input.good())
   {
@@ -63,6 +59,7 @@ bool SubjectChunk::readFromStream(std::istream& input, const unsigned int linesT
     return false;
   }
   removeTrailingCarriageReturn(label);
+  setLabel(label);
 
   //clear old chunks
   chunks.clear();

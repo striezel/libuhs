@@ -31,8 +31,12 @@ namespace libuhs
   struct HyperPNGChunk: public BasicChunk
   {
     public:
-      ///default constructor
-      HyperPNGChunk();
+      ///
+      /** \brief default constructor
+       *
+       * \param label   the chunk label
+       */
+      HyperPNGChunk(const std::string& label = "");
 
 
       ///destructor
@@ -56,13 +60,6 @@ namespace libuhs
       virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
 
 
-      /** \brief gets the chunk label
-       *
-       * \return Returns the chunk's label.
-       */
-      const std::string& getLabel() const;
-
-
       /** \brief writes the PNG file data to the given file
        *
        * \param fileName   name of the destination file
@@ -82,7 +79,6 @@ namespace libuhs
 
       static const uint32_t MaximumFileSize; /**< constant value that limits the maximum file size */
     private:
-      std::string m_Label; /**< chunk label */
       std::unique_ptr<uint8_t[]> m_PNG; /**< PNG file data */
       uint32_t m_PNGSize; /**< length of the PNG file data */
   }; //struct

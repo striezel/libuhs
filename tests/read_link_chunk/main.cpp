@@ -105,7 +105,7 @@ int main(int argc, char** argv)
       return 1;
     }
     std::cout << "Info: Successfully read link chunk from file!" << std::endl;
-    std::cout << "  Label: " << lc.label << std::endl
+    std::cout << "  Label: " << lc.getLabel() << std::endl
               << "  Destination: " << lc.destinationLine << std::endl;
 
     if (lc == cExpected)

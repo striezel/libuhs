@@ -63,8 +63,7 @@ namespace libuhs
 
 
     uint32_t startingLine;
-    std::string label;
-    uint32_t destinationLine;
+    uint32_t destinationLine; /**< destination line of the link */
   }; //struct
 } //namespace
 

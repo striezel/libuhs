@@ -31,9 +31,8 @@ namespace libuhs
 // set maximum file size to 2 MB
 const uint32_t HyperPNGChunk::MaximumFileSize = 2 * 1024 *1024;
 
-HyperPNGChunk::HyperPNGChunk()
-: BasicChunk(),
-  m_Label(""),
+HyperPNGChunk::HyperPNGChunk(const std::string& label)
+: BasicChunk(label),
   m_PNG(nullptr),
   m_PNGSize(0)
 {
@@ -63,8 +62,9 @@ bool HyperPNGChunk::readFromStream(std::istream& input, const unsigned int lines
     throw std::runtime_error("Unable to read chunk label from stream!");
     return false;
   }
-  m_Label = std::string(buffer.get());
-  removeTrailingCarriageReturn(m_Label);
+  std::string line = std::string(buffer.get());
+  removeTrailingCarriageReturn(line);
+  setLabel(line);
 
   //read file offset and length
   std::memset(buffer.get(), 0, bufferSize);
@@ -74,7 +74,7 @@ bool HyperPNGChunk::readFromStream(std::istream& input, const unsigned int lines
     throw std::runtime_error("Error: Unable to read hyperpng offset line from stream!");
     return false;
   }
-  std::string line = std::string(buffer.get());
+  line = std::string(buffer.get());
   removeTrailingCarriageReturn(line);
   const auto pieces = splitAtSeparator(line, ' ');
   if (pieces.size() != 3)
@@ -159,11 +159,6 @@ bool HyperPNGChunk::readFromStream(std::istream& input, const unsigned int lines
       return false;
   } //for
   return true;
-}
-
-const std::string& HyperPNGChunk::getLabel() const
-{
-  return m_Label;
 }
 
 bool HyperPNGChunk::writePNGFile(const std::string& fileName) const

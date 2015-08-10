@@ -56,7 +56,6 @@ namespace libuhs
     bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
 
     uint32_t startingLine;
-    std::string label; /**< chunk label */
     std::string decryptionKey; /**< the key that will be used for decryption */
     std::vector<std::string> hints;
   }; //struct
