@@ -18,8 +18,8 @@
  -------------------------------------------------------------------------------
 */
 
-#ifndef TEXTCHUNK_HPP
-#define TEXTCHUNK_HPP
+#ifndef LIBUHS_TEXTCHUNK_HPP
+#define LIBUHS_TEXTCHUNK_HPP
 
 #include <cstdint>
 #include <string>
@@ -30,7 +30,7 @@ namespace libuhs
   struct TextChunk: public BasicChunk
   {
     //constructor
-    TextChunk(const uint32_t start, const std::string& lbl, const std::string& key, const uint32_t _offset, const uint32_t len);
+    TextChunk(const uint32_t start, const std::string& lbl, const std::string& key, const uint32_t _offset = 0, const uint32_t len = 0);
 
     //destructor
     ~TextChunk() {}
@@ -61,4 +61,4 @@ namespace libuhs
   }; //struct
 } //namespace
 
-#endif // TEXTCHUNK_HPP
+#endif // LIBUHS_TEXTCHUNK_HPP
