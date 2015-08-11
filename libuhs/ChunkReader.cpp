@@ -28,6 +28,7 @@
 #include "chunks/NestHintChunk.hpp"
 #include "chunks/SubjectChunk.hpp"
 #include "chunks/TextChunk.hpp"
+#include "chunks/VersionChunk.hpp"
 
 namespace libuhs
 {
@@ -132,6 +133,17 @@ bool ChunkReader::read(std::istream& input, const uint32_t maxLines, const uint3
       if (! subchunk->readFromStream(input, subChunkLines))
       {
         throw std::runtime_error("Failed to read text sub-chunk!");
+        return false;
+      }
+      chunks.push_back(std::move(subchunk));
+      processedLines += subChunkLines;
+    }
+    else if (pieces[1] == "version")
+    {
+      std::unique_ptr<BasicChunk> subchunk(new VersionChunk(lineOffset+processedLines, "", ""));
+      if (! subchunk->readFromStream(input, subChunkLines))
+      {
+        throw std::runtime_error("Failed to read version sub-chunk!");
         return false;
       }
       chunks.push_back(std::move(subchunk));

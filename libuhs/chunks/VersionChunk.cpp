@@ -29,9 +29,9 @@ namespace libuhs
 
 VersionChunk::VersionChunk(const uint32_t start, const std::string& version, const std::string& additional)
 : BasicChunk("version chunk"),
-  startingLine(start),
   m_Version(version),
-  m_additionalText(additional)
+  m_additionalText(additional),
+  startingLine(start)
 {
 }
 
