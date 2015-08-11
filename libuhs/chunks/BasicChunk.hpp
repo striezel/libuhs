@@ -27,7 +27,7 @@
 namespace libuhs
 {
   /** enumeration type for chunk types */
-  enum class ChunkType {hint, hyperpng, info, link, nesthint, subject, text};
+  enum class ChunkType {hint, hyperpng, info, link, nesthint, subject, text, version};
 
   class BasicChunk
   {

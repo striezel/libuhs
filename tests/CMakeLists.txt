@@ -16,3 +16,6 @@ add_subdirectory (read_info_chunk)
 
 # Recurse into subdirectory for read test of link chunk.
 add_subdirectory (read_link_chunk)
+
+# Recurse into subdirectory for read test of version chunk.
+add_subdirectory (read_version_chunk)
