@@ -19,11 +19,13 @@
 */
 
 #include "file.hpp"
-#include "decryption.hpp"
-#include "utility.hpp"
 #include <cstring>
 #include <memory>
 #include <stdexcept>
+#include "ChunkReader.hpp"
+#include "decryption.hpp"
+#include "utility.hpp"
+
 
 namespace libuhs
 {
@@ -33,6 +35,8 @@ File::File(const std::string& fileName)
   m_MainTitle(std::string()),
   m_FirstHintLine(0),
   m_LastHintLine(0),
+  m_ChunkStart(std::istream::pos_type(-1)),
+  m_Chunks(std::vector<std::unique_ptr<BasicChunk> >()),
   m_DirectoryTree(std::vector<std::pair<std::string, uint32_t> >()),
   m_HintLines(std::vector<std::string>())
 {
@@ -64,6 +68,11 @@ const std::vector<std::string>& File::getHintLines() const
   return m_HintLines;
 }
 
+const std::vector<std::unique_ptr<BasicChunk> >& File::getChunks() const
+{
+  return m_Chunks;
+}
+
 bool File::read()
 {
   if (!m_Stream.good())
@@ -83,7 +92,11 @@ bool File::read()
     return false;
 
   //read hint lines (old format)
-  return readHintLines();
+  if (!readHintLines())
+    return false;
+
+  //read chunks
+  return readChunkData();
 }
 
 bool File::readHeader()
@@ -231,6 +244,48 @@ bool File::readHintLines()
     m_HintLines.push_back(Decryption::UHS88a(tmpLine));
     ++currentLine;
   } //while
+  return true;
+}
+
+bool File::readChunkData()
+{
+  if (!m_Stream.good())
+    return false;
+
+  const unsigned int bufferSize = 4096;
+  std::unique_ptr<char[]> buffer(new char[bufferSize]);
+  std::string line;
+  std::getline(m_Stream, line, '\n');
+  if (m_Stream.eof())
+  {
+    m_ChunkStart = std::istream::pos_type(-1);
+    m_Chunks.clear();
+    return true;
+  }
+  if (!m_Stream.good())
+  {
+    throw std::runtime_error("Could not read next line from file!");
+    return false;
+  }
+  const std::string cEndOfOldFormat("** END OF 88A FORMAT **");
+  removeTrailingCarriageReturn(line);
+  if (line != cEndOfOldFormat)
+  {
+    throw std::runtime_error("Expected \"" + cEndOfOldFormat + "\", but found \"" + line + "\" instead.");
+    return false;
+  }
+  //set start position for chunks
+  m_ChunkStart = m_Stream.tellg();
+  if (m_ChunkStart == std::istream::pos_type(-1))
+  {
+    throw std::runtime_error("Error: tellg() failed!");
+    return false;
+  }
+  if (!ChunkReader::read(m_Stream, 1024*1024*1024, 0, "", m_Chunks))
+  {
+    throw std::runtime_error("Error: ChunkReader::read() failed!");
+    return false;
+  }
   return true;
 }
 

@@ -22,9 +22,11 @@
 #define LIBUHS_FILE_HPP
 
 #include <fstream>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+#include "chunks/BasicChunk.hpp"
 
 namespace libuhs
 {
@@ -72,12 +74,21 @@ namespace libuhs
        *         already read. Returns an empty vector otherwise.
        */
       const std::vector<std::string>& getHintLines() const;
+
+
+      /** \brief chunks that were read from the file
+       *
+       * \return Returns a vector of chunk pointers.
+       */
+      const std::vector<std::unique_ptr<BasicChunk> >& getChunks() const;
     private:
       std::ifstream m_Stream;
 
       std::string m_MainTitle; /**< main title of the file (old format) */
       uint32_t m_FirstHintLine; /**< line number of the first hint */
       uint32_t m_LastHintLine; /**< line number of the last hint */
+      std::istream::pos_type m_ChunkStart; /**< file position where the chunks start */
+      std::vector<std::unique_ptr<BasicChunk> > m_Chunks; /**< the chunks */
 
       std::vector<std::pair<std::string, uint32_t> > m_DirectoryTree; /**< directory tree */
 
@@ -107,6 +118,14 @@ namespace libuhs
        *         Returns false, if read operation failed.
        */
       bool readHintLines();
+
+
+      /** \brief tries to read the new format's chunk data
+       *
+       * \return Returns true, if the chunk data was read.
+       *         Returns false, if read operation failed.
+       */
+      bool readChunkData();
 
 
       /** \brief utility function that skips lines, if needed

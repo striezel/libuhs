@@ -159,15 +159,17 @@ bool ChunkReader::read(std::istream& input, const uint32_t maxLines, const uint3
       }
       chunks.push_back(std::move(subchunk));
       processedLines += subChunkLines;
+      //Info chunk seems to be last chunk in file, so stop after that.
+      return true;
     }
-    else if (pieces[1] == "blank")
+    else if ((pieces[1] == "blank") || (pieces[1] == "incentive"))
     {
-      //"blank" is an empty chunk
+      //"blank" and "incentive" chunks are empty chunks
       if (subChunkLines >=1)
       {
         if (!skipLines(input, subChunkLines-1))
         {
-          throw std::runtime_error("Failed to skip blank sub-chunk!");
+          throw std::runtime_error("Failed to skip blank/incentive sub-chunk!");
           return false;
         }
         processedLines += subChunkLines;
