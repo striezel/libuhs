@@ -6,5 +6,8 @@
 bin/
 obj/
 
+# Qt Creator files
+*.user
+
 #UHS files
 *.[Uu][Hh][Ss]
