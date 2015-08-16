@@ -16,7 +16,13 @@ public:
   ~MainWindow();
 
 private:
+  void createActions();
+  void createMenus();
+
   Ui::MainWindow *ui;
+
+  QMenu *fileMenu;
+  QAction *exitAct;
 };
 
 #endif // MAINWINDOW_HPP
