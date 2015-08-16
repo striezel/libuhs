@@ -24,6 +24,26 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../libuhs/ChunkReader.cpp" />
+		<Unit filename="../../libuhs/ChunkReader.hpp" />
+		<Unit filename="../../libuhs/chunks/BasicChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/BasicChunk.hpp" />
+		<Unit filename="../../libuhs/chunks/HintChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/HintChunk.hpp" />
+		<Unit filename="../../libuhs/chunks/HyperPNGChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/HyperPNGChunk.hpp" />
+		<Unit filename="../../libuhs/chunks/InfoChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/InfoChunk.hpp" />
+		<Unit filename="../../libuhs/chunks/LinkChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/LinkChunk.hpp" />
+		<Unit filename="../../libuhs/chunks/NestHintChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/NestHintChunk.hpp" />
+		<Unit filename="../../libuhs/chunks/SubjectChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/SubjectChunk.hpp" />
+		<Unit filename="../../libuhs/chunks/TextChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/TextChunk.hpp" />
+		<Unit filename="../../libuhs/chunks/VersionChunk.cpp" />
+		<Unit filename="../../libuhs/chunks/VersionChunk.hpp" />
 		<Unit filename="../../libuhs/decryption.cpp" />
 		<Unit filename="../../libuhs/decryption.hpp" />
 		<Unit filename="../../libuhs/file.cpp" />
