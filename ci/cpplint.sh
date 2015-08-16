@@ -31,6 +31,10 @@ else
   CFLAGS="-I/usr/include/libxml2"
 fi
 
+# add flags for Qt library to CFLAGS
+QTFLAGS=$(pkg-config --cflags QtCore QtGui)
+CFLAGS="$CFLAGS $QTFLAGS"
+
 # print $CXX version to see which version is used for syntax check
 $CXX --version
 echo
