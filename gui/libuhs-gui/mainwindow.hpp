@@ -15,13 +15,19 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
+private slots:
+  void open();
+
 private:
   void createActions();
   void createMenus();
 
+  void loadFile(const QString &fileName);
+
   Ui::MainWindow *ui;
 
   QMenu *fileMenu;
+  QAction *openAct;
   QAction *exitAct;
 };
 
