@@ -1,4 +1,6 @@
 # libuhs
+[![Build Status](https://travis-ci.org/Thoronador/libuhs.svg)](https://travis-ci.org/Thoronador/libuhs)
+
 libuhs will be a library for reading UHS files.
 Currently it is still in a very early phase and is not able to read any such files yet.
 
