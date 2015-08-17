@@ -4,9 +4,9 @@
 libuhs will be a library for reading UHS files.
 Currently it is still in a very early phase and is not able to read any such files yet.
 
-# Building from source
+## Building from source
 
-## Prerequisites
+### Prerequisites
 
 To build libuhs from source you need a C++ compiler and CMake 2.8 or later.
 It also helps to have Git, a distributed version control system, on your build
@@ -22,7 +22,7 @@ or
 
 into a root terminal.
 
-## Getting the source code
+### Getting the source code
 
 Get the source directly from Git by cloning the Git repository and change to
 the directory after the repository is completely cloned:
@@ -32,7 +32,7 @@ the directory after the repository is completely cloned:
 
 That's it, you should now have the current source code of libuhs on your machine.
 
-## Build process
+### Build process
 
 The build process is relatively easy, because CMake does all the preparations.
 Starting in the root directory of the source, you can do the following steps:
@@ -45,7 +45,7 @@ Starting in the root directory of the source, you can do the following steps:
 In its current state, the code is only able to build a test case for the library,
 no realy binary will be built. This will change in the future.
 
-# Copyright and Licensing
+## Copyright and Licensing
 
 Copyright 2012-2015 Thoronador
 
@@ -62,6 +62,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Credits
+## Credits
 Special thanks to Stefan Wolff, who published some insightful information about
 the UHS file format on <http://www.swolff.dk/uhs/>.
