@@ -27,7 +27,7 @@ into a root terminal.
 Get the source directly from Git by cloning the Git repository and change to
 the directory after the repository is completely cloned:
 
-    git clone https://github.com/Thoronador/libuhs.git ./libuhs
+    git clone https://github.com/striezel/libuhs.git ./libuhs
     cd libuhs
 
 That's it, you should now have the current source code of libuhs on your machine.
