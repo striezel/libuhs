@@ -1,5 +1,5 @@
 # libuhs
-[![Build Status](https://travis-ci.org/Thoronador/libuhs.svg)](https://travis-ci.org/Thoronador/libuhs)
+[![Build Status](https://travis-ci.org/striezel/libuhs.svg)](https://travis-ci.org/striezel/libuhs)
 
 libuhs will be a library for reading UHS files.
 Currently it is still in a very early phase and is not able to read any such files yet.
@@ -47,7 +47,7 @@ no realy binary will be built. This will change in the future.
 
 ## Copyright and Licensing
 
-Copyright 2012-2015 Thoronador
+Copyright 2012-2015 Dirk Stolle
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
