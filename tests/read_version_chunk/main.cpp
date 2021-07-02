@@ -33,13 +33,13 @@ const libuhs::VersionChunk cExpected(1, "123a", "This is some additional text.")
 int main(int argc, char** argv)
 {
   std::string fileName = "version_chunk.dat";
-  if (argc>1 && argv != nullptr)
+  if (argc > 1 && argv != nullptr)
   {
     if (argv[1] != nullptr)
     {
         fileName = std::string(argv[1]);
     }
-  } //if
+  }
 
   std::cout << "Trying to read version chunk from \"" << fileName << "\"..." << std::endl;
 
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
   if (!inFileStream.good())
   {
     std::cout << "Unable to read chunk header from stream!" << std::endl;
-    return false;
+    return 1;
   }
   std::string line = std::string(buffer.get());
   libuhs::removeTrailingCarriageReturn(line);
@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  //check if it is a version chunk
+  // check if it is a version chunk
   if (pieces[1] != "version")
   {
     std::cout << "Error: expected version chunk, but found \"" << pieces[1]
@@ -123,7 +123,7 @@ int main(int argc, char** argv)
     if (inFileStream.is_open())
       inFileStream.close();
     return 1;
-  } //try-catch
+  }
   if (inFileStream.is_open())
     inFileStream.close();
 
