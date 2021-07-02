@@ -43,7 +43,7 @@ namespace libuhs
      *
      * \return Returns the type of the chunk.
      */
-    virtual ChunkType getType() const;
+    ChunkType getType() const override;
 
 
     /** \brief Tries to read the rest of the chunk from the given stream.
