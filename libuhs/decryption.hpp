@@ -44,7 +44,7 @@ namespace libuhs
     static std::string generateKey(const std::string& mainLabel);
 
 
-    /** \brief Decrypts a message from a nesthint hunk.
+    /** \brief Decrypts a message from a nesthint chunk.
      *
      * \param key  the decryption key, obtained from generateKey()
      * \param encryptedText  the encrypted text
@@ -53,7 +53,7 @@ namespace libuhs
     static std::string nesthint(const std::string& key, const std::string& encryptedText);
 
 
-    /** \brief Decrypts a message from a text hunk.
+    /** \brief Decrypts a message from a text chunk.
      *
      * \param key  the decryption key, obtained from generateKey()
      * \param encryptedText  the encrypted text

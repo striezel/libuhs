@@ -32,24 +32,24 @@ namespace libuhs
 {
   struct NestHintChunk: public BasicChunk
   {
-    ///constructor
+    /// constructor
     NestHintChunk(const uint32_t start, const std::string& lbl, const std::string& key, const std::vector<std::string>& theHints);
 
-    ///destructor
+    /// destructor
     ~NestHintChunk() {}
 
 
-    /** \brief gets the type of the hunk
+    /** \brief Gets the type of the chunk.
      *
-     * \return returns the type of the hunk as enumeration
+     * \return Returns the type of the chunk.
      */
     virtual ChunkType getType() const;
 
 
-    /** \brief tries to read the rest of the chunk from the given stream
+    /** \brief Tries to read the rest of the chunk from the given stream.
      *
      * \param input   input stream
-     * \param linesTotal  number of total lines in this hunk
+     * \param linesTotal  number of total lines in this chunk
      * \return Returns true, if chunk was read successfully.
      *         Returns false, if read operation failed.
      */
@@ -58,7 +58,7 @@ namespace libuhs
     uint32_t startingLine;
     std::string decryptionKey; /**< the key that will be used for decryption */
     std::vector<std::string> hints;
-  }; //struct
-} //namespace
+  }; // struct
+} // namespace
 
 #endif // LIBUHS_NESTHINTCHUNK_HPP

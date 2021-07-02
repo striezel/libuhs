@@ -29,35 +29,35 @@ namespace libuhs
 {
   struct TextChunk: public BasicChunk
   {
-    //constructor
+    /// constructor
     TextChunk(const uint32_t start, const std::string& lbl, const std::string& key, const uint32_t _offset = 0, const uint32_t len = 0);
 
-    //destructor
+    // destructor
     ~TextChunk() {}
 
 
-    /** \brief gets the type of the hunk
+    /** \brief Gets the type of the chunk.
      *
-     * \return returns the type of the hunk as enumeration
+     * \return Returns the type of the chunk.
      */
-    virtual ChunkType getType() const;
+    ChunkType getType() const override;
 
 
-    /** \brief tries to read the rest of the chunk from the given stream
+    /** \brief Tries to read the rest of the chunk from the given stream.
      *
      * \param input   input stream
-     * \param linesTotal  number of total lines in this hunk
+     * \param linesTotal  number of total lines in this chunk
      * \return Returns true, if chunk was read successfully.
      *         Returns false, if read operation failed.
      */
-    virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
+    bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
 
     uint32_t startingLine;
     std::string decryptionKey; /**< the key that will be used for decryption */
     uint32_t offset;
     uint32_t length;
     std::string text;
-  }; //struct
-} //namespace
+  }; // struct
+} // namespace
 
 #endif // LIBUHS_TEXTCHUNK_HPP

@@ -40,31 +40,31 @@ namespace libuhs
     SubjectChunk(const uint32_t start = 0, const std::string& lbl=std::string(), const std::string& key = "");
 
 
-    ///destructor
+    /// destructor
     ~SubjectChunk() {}
 
 
-    /** \brief gets the type of the hunk
+    /** \brief Gets the type of the chunk.
      *
-     * \return returns the type of the hunk as enumeration
+     * \return Returns the type of the chunk.
      */
-    virtual ChunkType getType() const;
+    ChunkType getType() const override;
 
 
-    /** \brief tries to read the rest of the chunk from the given stream
+    /** \brief Tries to read the rest of the chunk from the given stream.
      *
      * \param input   input stream
-     * \param linesTotal  number of total lines in this hunk
+     * \param linesTotal  number of total lines in this chunk
      * \return Returns true, if chunk was read successfully.
      *         Returns false, if read operation failed.
      */
-    virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
+    bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
 
 
     uint32_t startingLine;
     std::string decryptionKey; /**< decryption key */
     std::vector<std::unique_ptr<BasicChunk> > chunks;
-  }; //struct
-} //namespace
+  }; // struct
+} // namespace
 
 #endif // LIBUHS_SUBJECTCHUNK_HPP

@@ -36,24 +36,24 @@ namespace libuhs
     ~InfoChunk() {}
 
 
-    /** \brief gets the type of the hunk
+    /** \brief Gets the type of the chunk.
      *
-     * \return returns the type of the hunk as enumeration
+     * \return Returns the type of the chunk.
      */
-    virtual ChunkType getType() const;
+    ChunkType getType() const override;
 
 
-    /** \brief tries to read the rest of the chunk from the given stream
+    /** \brief Tries to read the rest of the chunk from the given stream.
      *
      * \param input   input stream
-     * \param linesTotal  number of total lines in this hunk
+     * \param linesTotal  number of total lines in this chunk
      * \return Returns true, if chunk was read successfully.
      *         Returns false, if read operation failed.
      */
-    virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
+    bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
 
 
-    /** \brief resets all data members to zero / empty
+    /** \brief Resets all data members to zero / empty.
      */
     void reset();
 
@@ -66,7 +66,7 @@ namespace libuhs
     std::string copyrightNotice; /**< copyright notice */
     std::string authorNote; /**< Note about the author */
     std::string gameNote; /**< notes about the game */
-  }; //struct
-} //namespace
+  }; // struct
+} // namespace
 
 #endif // LIBUHS_INFOCHUNK_HPP

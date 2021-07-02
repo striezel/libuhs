@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of libuhs.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,17 +37,17 @@ namespace libuhs
     ~HintChunk() {}
 
 
-    /** \brief gets the type of the hunk
+    /** \brief Gets the type of the chunk.
      *
-     * \return returns the type of the hunk as enumeration
+     * \return Returns the type of the chunk.
      */
-    virtual ChunkType getType() const;
+    ChunkType getType() const override;
 
 
-    /** \brief tries to read the rest of the chunk from the given stream
+    /** \brief Tries to read the rest of the chunk from the given stream.
      *
      * \param input   input stream
-     * \param linesTotal  number of total lines in this hunk
+     * \param linesTotal  number of total lines in this chunk
      * \return Returns true, if chunk was read successfully.
      *         Returns false, if read operation failed.
      */
@@ -63,7 +63,7 @@ namespace libuhs
      * \return Returns true, if the other hint chunk is equal to this one.
      */
     bool operator==(const HintChunk& other) const;
-  }; //struct
-} //namespace
+  }; // struct
+} // namespace
 
 #endif // LIBUHS_HINTCHUNK_HPP

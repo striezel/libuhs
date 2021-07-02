@@ -41,46 +41,46 @@ namespace libuhs
       VersionChunk(const uint32_t start = 0, const std::string& version=std::string(), const std::string& additional=std::string());
 
 
-      ///destructor
+      /// destructor
       ~VersionChunk() {}
 
 
-      /** \brief gets the type of the hunk
+      /** \brief Gets the type of the chunk.
        *
-       * \return returns the type of the hunk as enumeration
+       * \return Returns the type of the chunk.
        */
-      virtual ChunkType getType() const;
+      ChunkType getType() const override;
 
 
-      /** \brief tries to read the rest of the chunk from the given stream
+      /** \brief Tries to read the rest of the chunk from the given stream.
        *
        * \param input   input stream
-       * \param linesTotal  number of total lines in this hunk
+       * \param linesTotal  number of total lines in this chunk
        * \return Returns true, if chunk was read successfully.
        *         Returns false, if read operation failed.
        */
-      virtual bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
+      bool readFromStream(std::istream& input, const unsigned int linesTotal) override;
 
 
-      /** \brief returns the version string
+      /** \brief Gets the version string.
        *
        * \return Returns the version string.
-       * Returns an empty string, if no version was set yet.
+       *         Returns an empty string, if no version was set yet.
        */
       const std::string& getVersion() const;
 
 
-      /** \brief sets a new version value
+      /** \brief Sets a new version value.
        *
        * \param newVersion   the new version
        */
       void setVersion(const std::string& newVersion);
 
 
-      /** \brief returns the additional text of the version chunk
+      /** \brief Returns the additional text of the version chunk.
        *
        * \return Returns the additional text of the version chunk.
-       * Returns an empty string, if no additional text was set yet.
+       *         Returns an empty string, if no additional text was set yet.
        */
       const std::string& additionalText() const;
 
@@ -94,7 +94,7 @@ namespace libuhs
 
 
       uint32_t startingLine; /**< starting line of the chunk */
-  }; //struct
-} //namespace
+  }; // struct
+} // namespace
 
 #endif // LIBUHS_LINKCHUNK_HPP
