@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of libuhs.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,9 +25,10 @@
 
 namespace libuhs
 {
+  /** Handles Decryption of UHS content. */
   struct Decryption
   {
-    /** \brief decrypts an old UHS88a-style encrypted string
+    /** \brief Decrypts an old UHS88a-style encrypted string.
      *
      * \param message  the encrypted message
      * \return returns the decrypted string
@@ -35,7 +36,7 @@ namespace libuhs
     static std::string UHS88a(const std::string& message);
 
 
-    /** \brief generates a decryption key based on the given main label
+    /** \brief Generates a decryption key based on the given main label.
      *
      * \param mainLabel  the main label
      * \return Returns decryption key.
@@ -43,7 +44,7 @@ namespace libuhs
     static std::string generateKey(const std::string& mainLabel);
 
 
-    /** \brief decrypts a message from a nesthint hunk
+    /** \brief Decrypts a message from a nesthint hunk.
      *
      * \param key  the decryption key, obtained from generateKey()
      * \param encryptedText  the encrypted text
@@ -52,7 +53,7 @@ namespace libuhs
     static std::string nesthint(const std::string& key, const std::string& encryptedText);
 
 
-    /** \brief decrypts a message from a text hunk
+    /** \brief Decrypts a message from a text hunk.
      *
      * \param key  the decryption key, obtained from generateKey()
      * \param encryptedText  the encrypted text
@@ -61,14 +62,14 @@ namespace libuhs
     static std::string text(const std::string& key, const std::string& encryptedText);
 
 
-    /** \brief returns a "harmonized" string that is better readable
+    /** \brief Returns a "harmonized" string that is better readable.
      *
      * \param text   a text, usually returned by nesthint() or text() functions of this class
      * \param compressSpaces   if true, the function compresses multiple spaces into one single space
      * \return Returns a harmonized string;
      */
     static std::string harmonize(const std::string& text, const bool compressSpaces = true);
-  }; //struct
-} //namespace
+  }; // struct
+} // namespace
 
 #endif // DECRYPTION_HPP
