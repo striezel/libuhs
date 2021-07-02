@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the testsuite of libuhs.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,13 +43,13 @@ const libuhs::HintChunk cExpected = {
 int main(int argc, char** argv)
 {
   std::string fileName = "hint_chunk.dat";
-  if (argc>1 && argv != nullptr)
+  if (argc > 1 && argv != nullptr)
   {
     if (argv[1] != nullptr)
     {
         fileName = std::string(argv[1]);
     }
-  } //if
+  }
 
   std::cout << "Trying to read hint chunk from \"" << fileName << "\"..." << std::endl;
 
@@ -69,7 +69,7 @@ int main(int argc, char** argv)
   if (!inFileStream.good())
   {
     std::cout << "Unable to read chunk header from stream!" << std::endl;
-    return false;
+    return 1;
   }
   std::string line = std::string(buffer.get());
   libuhs::removeTrailingCarriageReturn(line);
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  //check if it is a hint chunk
+  // check if it is a hint chunk
   if (pieces[1] != "hint")
   {
     std::cout << "Error: expected hint chunk, but found \"" << pieces[1]
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     std::cout << "Error: \"" << pieces[0] << "\" is not an unsigned integer!" << std::endl;
     return 1;
   }
-  if (linesTotal!=45)
+  if (linesTotal != 45)
   {
     std::cout << "Error: expected line count to be 45, but found \"" << linesTotal
               << "\" instead!" << std::endl;
@@ -138,7 +138,7 @@ int main(int argc, char** argv)
     if (inFileStream.is_open())
       inFileStream.close();
     return 1;
-  } //try-catch
+  }
   if (inFileStream.is_open())
     inFileStream.close();
 

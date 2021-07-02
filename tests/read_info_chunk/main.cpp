@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the testsuite of libuhs.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,13 +29,13 @@
 int main(int argc, char** argv)
 {
   std::string fileName = "info_chunk.dat";
-  if (argc>1 && argv != nullptr)
+  if (argc > 1 && argv != nullptr)
   {
     if (argv[1] != nullptr)
     {
         fileName = std::string(argv[1]);
     }
-  } //if
+  }
 
   std::cout << "Trying to read info chunk from \"" << fileName << "\"..." << std::endl;
 
@@ -55,7 +55,7 @@ int main(int argc, char** argv)
   if (!inFileStream.good())
   {
     std::cout << "Unable to read chunk header from stream!" << std::endl;
-    return false;
+    return 1;
   }
   std::string line = std::string(buffer.get());
   libuhs::removeTrailingCarriageReturn(line);
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  //check if it is a info chunk
+  // check if it is a info chunk
   if (pieces[1] != "info")
   {
     std::cout << "Error: expected info chunk, but found \"" << pieces[1]
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
     std::cout << "Error: \"" << pieces[0] << "\" is not an unsigned integer!" << std::endl;
     return 1;
   }
-  if (linesTotal!=16)
+  if (linesTotal != 16)
   {
     std::cout << "Error: expected line count to be 16, but found \"" << linesTotal
               << "\" instead!" << std::endl;
@@ -108,29 +108,29 @@ int main(int argc, char** argv)
               << "Publisher: " << ic.publisher << std::endl
               << "Copyright notice: " << ic.copyrightNotice << std::endl
               << "Game note: " << ic.gameNote << std::endl;
-    //check if contents match expected contents
+    // check if contents match expected contents
     if (ic.fileLength != 123456
-      or ic.date != "31-Feb-15"
-      or ic.time != "22:23:24"
-      or ic.author != "Kermit the Frog"
-      or ic.publisher != "The Pub"
-      or ic.copyrightNotice != "This is some random copyright notice. It has really not much of a purpose here and is just used for unit testing, in particular for testing InfoChunk::readFromStream()."
-      or ic.authorNote != "Kermit the Frog, aka your favourite green guy, can be reached at frog@example.com."
-      or ic.gameNote != "This game was published by somebody else.  All trademarks in this file are the property of their respective owners."
+      || ic.date != "31-Feb-15"
+      || ic.time != "22:23:24"
+      || ic.author != "Kermit the Frog"
+      || ic.publisher != "The Pub"
+      || ic.copyrightNotice != "This is some random copyright notice. It has really not much of a purpose here and is just used for unit testing, in particular for testing InfoChunk::readFromStream()."
+      || ic.authorNote != "Kermit the Frog, aka your favourite green guy, can be reached at frog@example.com."
+      || ic.gameNote != "This game was published by somebody else.  All trademarks in this file are the property of their respective owners."
        )
     {
       std::cout << "Error: Info chunk contents do not match the expected values!" << std::endl;
       return 1;
-    } //if
+    }
     std::cout << "Passed test: Contents are exactly as we want them." << std::endl;
-  } //try
+  } // try
   catch(std::exception& except)
   {
     std::cout << "Caught exception: " << except.what() << std::endl;
     if (inFileStream.is_open())
       inFileStream.close();
     return 1;
-  } //try-catch
+  } // try-catch
   if (inFileStream.is_open())
     inFileStream.close();
 

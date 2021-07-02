@@ -1,7 +1,7 @@
 /*
  -------------------------------------------------------------------------------
     This file is part of the testsuite of libuhs.
-    Copyright (C) 2015  Dirk Stolle
+    Copyright (C) 2015, 2021  Dirk Stolle
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ int main(int argc, char** argv)
   if (!inFileStream.good())
   {
     std::cout << "Unable to read chunk header from stream!" << std::endl;
-    return false;
+    return 1;
   }
   std::string line = std::string(buffer.get());
   libuhs::removeTrailingCarriageReturn(line);
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  //check if it is a hyperpng chunk
+  // check if it is a hyperpng chunk
   if (pieces[1] != "hyperpng")
   {
     std::cout << "Error: expected hyperpng chunk, but found \"" << pieces[1]
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     std::cout << "Error: \"" << pieces[0] << "\" is not an unsigned integer!" << std::endl;
     return 1;
   }
-  if (linesTotal<3)
+  if (linesTotal < 3)
   {
     std::cout << "Error: expected line count to be at least three (3), but found \"" << linesTotal
               << "\" instead!" << std::endl;
@@ -121,7 +121,7 @@ int main(int argc, char** argv)
       return 1;
     }
 
-    //open original PNG file
+    // open original PNG file
     inFileStream.open(pngname, std::ios_base::in | std::ios_base::binary);
     if (!inFileStream.is_open() || !inFileStream.good())
     {
@@ -137,7 +137,7 @@ int main(int argc, char** argv)
     }
     inFileStream.close();
 
-    //open extracted PNG file
+    // open extracted PNG file
     inFileStream.open(extractionPath, std::ios_base::in | std::ios_base::binary);
     if (!inFileStream.is_open() || !inFileStream.good())
     {
@@ -169,7 +169,7 @@ int main(int argc, char** argv)
     if (inFileStream.is_open())
       inFileStream.close();
     return 1;
-  } //try-catch
+  }
   if (inFileStream.is_open())
     inFileStream.close();
 
