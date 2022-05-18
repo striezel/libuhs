@@ -1,7 +1,7 @@
 # libuhs
 
-[![GitHub CI Clang status](https://github.com/striezel/libuhs/workflows/GitHub%20CI%20with%20Clang%208,%209,%2010/badge.svg)](https://github.com/striezel/libuhs/actions)
-[![GitHub CI GCC status](https://github.com/striezel/libuhs/workflows/GitHub%20CI%20with%20GCC%208,%209,%2010/badge.svg)](https://github.com/striezel/libuhs/actions)
+[![GitHub CI Clang status](https://github.com/striezel/libuhs/workflows/Clang/badge.svg)](https://github.com/striezel/libuhs/actions)
+[![GitHub CI GCC status](https://github.com/striezel/libuhs/workflows/GCC/badge.svg)](https://github.com/striezel/libuhs/actions)
 [![GitLab pipeline status](https://gitlab.com/striezel/libuhs/badges/master/pipeline.svg)](https://gitlab.com/striezel/libuhs/-/pipelines)
 
 libuhs will be a library for reading UHS files.
