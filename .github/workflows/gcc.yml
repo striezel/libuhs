@@ -1,24 +1,24 @@
-name: Clang
+name: GCC
 
 on: push
 
 jobs:
-  build_ubuntu_clang:
+  build_ubuntu_gcc:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
         version: [8, 9, 10]
     steps:
       # Checks-out the repository under $GITHUB_WORKSPACE.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Debian packages
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake clang-${{ matrix.version }} git pkg-config
-      - name: Build with Clang ${{ matrix.version }}
+          sudo apt-get install -y cmake g++-${{ matrix.version }} git pkg-config
+      - name: Build with GNU GCC ${{ matrix.version }}
         run: |
-          export CXX=clang++-${{ matrix.version }}
-          export CC=clang-${{ matrix.version }}
+          export CXX=g++-${{ matrix.version }}
+          export CC=gcc-${{ matrix.version }}
           cd $GITHUB_WORKSPACE
           mkdir build
           cd build
