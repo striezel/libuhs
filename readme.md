@@ -15,7 +15,7 @@ To build libuhs from source you need a C++ compiler and CMake 2.8 or later.
 It also helps to have Git, a distributed version control system, on your build
 system to get the latest source code directly from the Git repository.
 
-All three can usually be installed be typing
+All three can usually be installed by typing
 
     apt-get install cmake g++ git
 
@@ -46,7 +46,7 @@ Starting in the root directory of the source, you can do the following steps:
     make -j2
 
 In its current state, the code is only able to build a test case for the library,
-no realy binary will be built. This will change in the future.
+no real binary will be built. This will change in the future.
 
 ## Copyright and Licensing
 
@@ -66,5 +66,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Credits
+
 Special thanks to Stefan Wolff, who published some insightful information about
 the UHS file format on <http://www.swolff.dk/uhs/>.
