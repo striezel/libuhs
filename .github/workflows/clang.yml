@@ -3,7 +3,7 @@ name: Clang
 on: push
 
 jobs:
-  build_ubuntu_clang:
+  clang:
     strategy:
       fail-fast: false
       matrix:
