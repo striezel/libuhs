@@ -1,7 +1,8 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.8)
 project (test_read_hint_chunk)
 
-add_definitions(-std=c++0x)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (CMAKE_COMPILER_IS_GNUCC)
     add_definitions(-Wall -O3 -fexceptions)
 endif (CMAKE_COMPILER_IS_GNUCC)
